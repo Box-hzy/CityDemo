@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 1cba2cca423a8bf4da1b9ec4c03f3b51
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - scaredVillager: {fileID: 9151066825631746519, guid: 35e34617e1553f545abbfed8a7caa2fb,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

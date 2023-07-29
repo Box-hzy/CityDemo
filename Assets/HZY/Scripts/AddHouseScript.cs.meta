@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 492cac7775ef2d24599bcd8c44bcd46e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - burningMat: {instanceID: 0}
+  - destoryMat: {instanceID: 0}
+  - vfx: {fileID: 8154856359357389863, guid: c8465181174f7e14ab3c9a7d73cd1516, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
