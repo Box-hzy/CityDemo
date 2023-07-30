@@ -7,13 +7,21 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public npcFactory npcFactory;
+    public int numOfNPC;
 
+    //[HideInInspector]public List<Vector3> waypoints = new List<Vector3>();
+    //public GameObject waypointPrefab;
+    public Transform waypointGroup;
+   
 
     public CityGenerator cityGenerator;
     public NavMeshSurface[] navMeshSurfaces;
     bool isBaked;
 
-    public List<Transform> accessibleHouses = new List<Transform>();
+    public bool activateLight;
+
+    //public List<Transform> accessibleHouses = new List<Transform>();
 
 
     public KeyCode generateButton = KeyCode.N;
@@ -28,8 +36,11 @@ public class GameManager : MonoBehaviour
     {
         if (cityGenerator && cityGenerator.transform.childCount == 0)
         {
+            ClearhWaypoint();
             cityGenerator.GenerateCity();
+
             RefreshNavMeshSurface();
+            RegenerateNPC();
         }
     }
 
@@ -40,13 +51,33 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(generateButton))
         {
             if (cityGenerator)
+            {
+                ClearhWaypoint();
                 cityGenerator.GenerateCity();
 
-            //RefreshNavMeshSurface();
+            }
+                
 
         }
 
     }
+
+    void ClearhWaypoint()
+    {
+        if (waypointGroup.childCount <= 0) return;
+        for (int i = 0; i < waypointGroup.childCount; i++)
+        {
+            Destroy(waypointGroup.GetChild(i).gameObject);
+        }
+    }
+
+    //void SpawnWaypoint()
+    //{ 
+    //    for(int i = 0;i < waypoints.Count;i++) 
+    //    {
+    //        Instantiate(waypointPrefab, waypoints[i], Quaternion.identity, waypointGroup);
+    //    }
+    //}
 
     void RefreshNavMeshSurface()
     {
@@ -62,10 +93,34 @@ public class GameManager : MonoBehaviour
 
     }
 
+    void RegenerateNPC()
+    {
+        //refresh nav mesh bounds
+        npcFactory.navMeshBounds = npcFactory.CalculateBoundsOfNavMesh();
+        npcFactory.RefreshRanges();
+
+        //clear npc
+        for (int i = 0; i < npcFactory.npcParent.childCount; i++)
+        {
+            Destroy(npcFactory.npcParent.GetChild(i).gameObject);
+        }
+        //generate npc
+        for (int i = 0; i < numOfNPC; i++)
+        {
+            GameObject newNpc = npcFactory.CreateNpc();
+        }
+    }
+
     private void LateUpdate()
     {
-        RefreshNavMeshSurface();
         
+        if (Input.GetKeyDown(generateButton))
+        {
+            RefreshNavMeshSurface();
+            RegenerateNPC();
+
+        }
+
     }
 
 

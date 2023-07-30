@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - AccessPt
+  - Waypoint
+  - NPC
   layers:
   - Default
   - TransparentFX

@@ -7,7 +7,7 @@ using UnityEngine;
 public class RandomModel : MonoBehaviour
 {
     //public List<GameObject> Buildings;
-   
+
     private void Awake()
     {
         int randomNum = Random.Range(0, transform.childCount);
@@ -17,10 +17,12 @@ public class RandomModel : MonoBehaviour
             transform.GetChild(i).gameObject.SetActive(i == randomNum);
 
             //use box collider instead of mesh collider
-            if (i != randomNum) return;
+            if (i != randomNum) continue;
+            if (transform.CompareTag("NPC")) continue;
+
             Transform target = transform.GetChild(i);
             target.TryGetComponent<MeshCollider>(out MeshCollider mesh);
-            if(mesh) mesh.enabled = false;
+            if (mesh) mesh.enabled = false;
             target.AddComponent<BoxCollider>();
         }
 
