@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private float? jumpButtonPressedTime;
     private bool isJumping;
     private bool isGrounded;
-    private bool isShiftKeyPressed;
+    //private bool isShiftKeyPressed;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +45,9 @@ public class PlayerController : MonoBehaviour
         Vector3 movementDirection = new Vector3(horizontalInput, 0, verticalInput);
         float inputMagnitude = Mathf.Clamp01(movementDirection.magnitude);
 
-        isShiftKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+        //isShiftKeyPressed = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
+        //running blend tree setting
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
             inputMagnitude *= 2;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
 
         animator.SetFloat("MoveBlend", inputMagnitude, 0.05f, Time.deltaTime);
 
+        //move to the camera facing direction
         movementDirection = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * movementDirection;
         movementDirection.Normalize();
 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour
             lastGroundedTime = Time.time;
         }
 
-        //if (Input.GetButtonDown("Jump"))
+        //if (Input.GetButtonDown("Jump")) conflict with key shift, cannot jump while running
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Jump!");
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //landing animation
         if (Time.time - lastGroundedTime <= jumpButtonGracePeriod)
         {
             characterController.stepOffset = originalStepOffset;
@@ -82,6 +85,7 @@ public class PlayerController : MonoBehaviour
             isJumping = false;
             animator.SetBool("Fall", false);
 
+            //jump animation
             if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
             {
                 ySpeed = jumpSpeed;
@@ -91,6 +95,7 @@ public class PlayerController : MonoBehaviour
                 lastGroundedTime = null;
             }
         }
+        //fall animation
         else
         {
             characterController.stepOffset = 0;
@@ -103,6 +108,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        //move animation
         if (movementDirection != Vector3.zero)
         {
             animator.SetBool("Move", true);

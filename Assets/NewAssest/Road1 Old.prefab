@@ -49,9 +49,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -115,9 +123,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -181,9 +197,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -247,9 +271,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -313,9 +345,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -379,9 +419,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1224574634684750, guid: 2224b63330275e5478ef024b2913f937, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1573730805894322, guid: 2224b63330275e5478ef024b2913f937, type: 3}
       propertyPath: m_Name
       value: Street 3 Prefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573730805894322, guid: 2224b63330275e5478ef024b2913f937, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4533943726500818, guid: 2224b63330275e5478ef024b2913f937, type: 3}
       propertyPath: m_RootOrder
@@ -445,9 +493,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1224574634684750, guid: 2224b63330275e5478ef024b2913f937, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1573730805894322, guid: 2224b63330275e5478ef024b2913f937, type: 3}
       propertyPath: m_Name
       value: Street 3 Prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1573730805894322, guid: 2224b63330275e5478ef024b2913f937, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4533943726500818, guid: 2224b63330275e5478ef024b2913f937, type: 3}
       propertyPath: m_RootOrder
@@ -511,9 +567,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -577,9 +641,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder
@@ -643,9 +715,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8721638767207655187}
     m_Modifications:
+    - target: {fileID: 1045525805849594, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_Name
       value: Sideway 8 prefab (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642800337198924, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4665886090133042, guid: 5617f09499355b14bb58fe8aeb052d7e, type: 3}
       propertyPath: m_RootOrder

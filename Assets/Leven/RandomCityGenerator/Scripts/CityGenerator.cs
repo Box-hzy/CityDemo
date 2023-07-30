@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class CityGenerator : MonoBehaviour
 {
-    [Range(11,55)]
+    [Range(11, 55)]
 
     //Number of tiles on the side city
     public int CitySize = 30;
@@ -16,7 +16,7 @@ public class CityGenerator : MonoBehaviour
     public float CellSize = 9;
 
     // Arrays of tiles
-    public GameObject[] Building, Terrain, Road;
+    public GameObject[] Building, CloserTerrain, FurtherTerrain, Road;
 
 
     void Start()
@@ -33,22 +33,85 @@ public class CityGenerator : MonoBehaviour
     public void GenerateCity()
     {
         ClearCity();
-        
+
         string[][] cityData = GenerateData(CitySize);
-        for(int j=0;j<cityData.Length;j++)
+        for (int j = 0; j < cityData.Length; j++)
         {
-            for(int i=0;i<cityData[j].Length;i++)
+            for (int i = 0; i < cityData[j].Length; i++)
             {
-                if(cityData[j][i]==" ")AddCell(Terrain[Random.Range(0, Terrain.Length)],i,j,Random.Range(0, 4)*90);
-                if(cityData[j][i]=="_")AddRoad(i,j,cityData);
-                if(cityData[j][i]=="a")AddHouse(i,j,cityData);
+                //if(cityData[j][i]==" ")AddCell(Terrain[Random.Range(0, Terrain.Length)],i,j,Random.Range(0, 4)*90);
+                if (cityData[j][i] == " ") AddLawn(i, j, cityData);
+                if (cityData[j][i] == "_") AddRoad(i, j, cityData);
+                if (cityData[j][i] == "a") AddHouse(i, j, cityData);
             }
         }
     }
+
+    //let the bench facing to the road, the rest of the lawn rotate randomly 
+    void AddLawn(int x, int y, string[][] cityData)
+    {
+        List<int> d = new List<int> { 0, 1, 2, 3 };
+        string[][] g = cityData;
+
+        int[] p = new[] { 1, 0, 0, 1, -1, 0, 0, -1 };
+
+        HashSet<Vector2Int> edgeLawn = new HashSet<Vector2Int>();
+        HashSet<Vector2Int> outerLawn = new HashSet<Vector2Int>();
+
+
+        for (int i = 0; i < d.Count; i++)
+        {
+            int dy = y + p[d[i] * 2 + 1];
+            if (dy < 0 || dy >= g.Length) break;
+            int dx = x + p[d[i] * 2 + 0];
+            if (dx < 0 || dx >= g[dy].Length) break;
+
+
+            if (g[dy][dx] == "_")
+            {
+                if (!edgeLawn.Contains(new Vector2Int(x, y)))
+                {
+                    int randomNum = Random.Range(0, CloserTerrain.Length);
+                    if (randomNum == 0 || randomNum == 1) AddCell(CloserTerrain[randomNum], x, y, d[i] * 90);
+                    else AddCell(CloserTerrain[randomNum], x, y, Random.Range(0, 4) * 90);
+                    edgeLawn.Add(new Vector2Int(x, y));
+                }
+               
+            }
+            else
+            {
+                outerLawn.Add(new Vector2Int(x, y));
+            }
+          
+                //int randomNum = Random.Range(0, FurtherTerrain.Length);    //no bench in the other area
+                //AddCell(FurtherTerrain[randomNum], x, y, Random.Range(0, 4) * 90);
+                //return;
+            
+        }
+
+        outerLawn.ExceptWith(edgeLawn);
+
+        //for (int i = 0; i < edgeLawn.Count; i++)
+        //{
+        //    int randomNum = Random.Range(0, CloserTerrain.Length);
+        //    if (randomNum == 0 || randomNum == 1) AddCell(CloserTerrain[randomNum], x, y, d[i] * 90);
+        //    //else AddCell(CloserTerrain[randomNum], x, y, Random.Range(0, 4) * 90);
+        //}
+
+        for (int i = 0; i < outerLawn.Count; i++)
+        {
+            int randomNum = Random.Range(0, FurtherTerrain.Length);
+            AddCell(FurtherTerrain[randomNum], x, y, Random.Range(0, 4) * 90);
+        }
+
+
+
+    }
+
     // remove all tiles in container of the city
     public void ClearCity()
     {
-        for(int i = this.transform.childCount-1;i>=0;i--)
+        for (int i = this.transform.childCount - 1; i >= 0; i--)
         {
             Destroy(this.transform.GetChild(i).gameObject);
         }
@@ -57,28 +120,28 @@ public class CityGenerator : MonoBehaviour
     // Adding a random House Tile
     void AddHouse(int x, int y, string[][] cityData)
     {
-        List<int> d = new List<int>{0,1,2,3};
-        string[][] g = cityData; 
+        List<int> d = new List<int> { 0, 1, 2, 3 };
+        string[][] g = cityData;
         int i;
-        for(i=0;i<d.Count;i++)
+        for (i = 0; i < d.Count; i++)
         {
             int j = Random.Range(0, 4);
             int temp = d[j];
             d[j] = d[i];
             d[i] = temp;
         }
-        int[] p = new[]{1,0,0,1,-1,0,0,-1};
-        for(i=0;i<d.Count;i++)
+        int[] p = new[] { 1, 0, 0, 1, -1, 0, 0, -1 };
+        for (i = 0; i < d.Count; i++)
         {
-            int dy = y+p[d[i]*2+1];
-            if(dy<0||dy>=g.Length) break;
-            int dx = x+p[d[i]*2+0];
-            if(dx<0||dx>=g[dy].Length) break;
-            if(g[dy][dx]=="_")
+            int dy = y + p[d[i] * 2 + 1];
+            if (dy < 0 || dy >= g.Length) break;
+            int dx = x + p[d[i] * 2 + 0];
+            if (dx < 0 || dx >= g[dy].Length) break;
+            if (g[dy][dx] == "_")
             {
-                AddCell(Building[Random.Range(0, Building.Length)],x,y,d[i]*90);
+                AddCell(Building[Random.Range(0, Building.Length)], x, y, d[i] * 90);
                 return;
-            } 
+            }
         }
     }
     // Adding a Road Tile
@@ -97,38 +160,38 @@ public class CityGenerator : MonoBehaviour
         new[]{1,1,1,3},
         new[]{1,0,0,2}
         };
-        int[] p = new[]{1,0,0,1,-1,0,0,-1};
-        for(int j=0;j<d.Length;j++)
+        int[] p = new[] { 1, 0, 0, 1, -1, 0, 0, -1 };
+        for (int j = 0; j < d.Length; j++)
         {
-            int i=2;
-            for(i=2;i<d[j].Length;i++)
+            int i = 2;
+            for (i = 2; i < d[j].Length; i++)
             {
                 int w = d[j][i];
-                int dy = y+p[w*2+1];
-                if(dy<0||dy>=g.Length) break;
-                int dx = x+p[w*2+0];
-                if(dx<0||dx>=g[dy].Length) break;
-                if(g[dy][dx]!="_") break;
+                int dy = y + p[w * 2 + 1];
+                if (dy < 0 || dy >= g.Length) break;
+                int dx = x + p[w * 2 + 0];
+                if (dx < 0 || dx >= g[dy].Length) break;
+                if (g[dy][dx] != "_") break;
             }
-            if(i==d[j].Length)
+            if (i == d[j].Length)
             {
                 int roadIndex = d[j][0] - 1;
-                int rotation = d[j][1]*90;
-                AddCell(Road[roadIndex],x,y,rotation);
+                int rotation = d[j][1] * 90;
+                AddCell(Road[roadIndex], x, y, rotation);
                 return;
             }
         }
     }
     // Adding the GameObject
-    public void AddCell(GameObject cell,int x,int y,float deg)
+    public void AddCell(GameObject cell, int x, int y, float deg)
     {
-        Quaternion rotation = Quaternion.Euler(0,-deg,0);
-        Matrix4x4 m = Matrix4x4.Translate(new Vector3(x*CellSize,0,y*CellSize)) * Matrix4x4.Rotate(rotation) * Matrix4x4.Translate(new Vector3(-CellSize/2,0,-CellSize/2));
+        Quaternion rotation = Quaternion.Euler(0, -deg, 0);
+        Matrix4x4 m = Matrix4x4.Translate(new Vector3(x * CellSize, 0, y * CellSize)) * Matrix4x4.Rotate(rotation) * Matrix4x4.Translate(new Vector3(-CellSize / 2, 0, -CellSize / 2));
 
         GameObject a = Instantiate(cell) as GameObject;
-        
-        a.name = "tile_"+x.ToString()+"x"+y.ToString();
-        a.transform.position = new Vector3(m[0,3], m[1,3], m[2,3]);
+
+        a.name = "tile_" + x.ToString() + "x" + y.ToString();
+        a.transform.position = new Vector3(m[0, 3], m[1, 3], m[2, 3]);
         a.transform.rotation = m.rotation;
         a.transform.SetParent(this.transform);
     }
@@ -144,102 +207,102 @@ public class CityGenerator : MonoBehaviour
         int i;
         int j;
         string[][] g = new string[n][];
-        for(i=0;i<n;i++)
+        for (i = 0; i < n; i++)
         {
             g[i] = new string[n];
-            for(j=0;j<n;j++)g[i][j]=" ";
+            for (j = 0; j < n; j++) g[i][j] = " ";
         }
 
         string[][] p = squareData[Random.Range(0, squareData.Length)];
-        SetRegion(p, g, Mathf.FloorToInt(n/2-p[0].Length/2), Mathf.FloorToInt(n/2-p.Length/2), false);
+        SetRegion(p, g, Mathf.FloorToInt(n / 2 - p[0].Length / 2), Mathf.FloorToInt(n / 2 - p.Length / 2), false);
         int changesLeft = 400;
-        for (int k = 5000; k > 0 && changesLeft > 0; k--) 
+        for (int k = 5000; k > 0 && changesLeft > 0; k--)
         {
             p = squareData[Random.Range(0, squareData.Length)];
             //var p = SquareData[0];
             int w = p[0].Length;
             int h = p.Length;
             int d = 1;
-            int x = Mathf.RoundToInt(Random.value * (g.Length - w - d*2))+d;
-            int y = Mathf.RoundToInt(Random.value * (g.Length - h - d*2))+d;
+            int x = Mathf.RoundToInt(Random.value * (g.Length - w - d * 2)) + d;
+            int y = Mathf.RoundToInt(Random.value * (g.Length - h - d * 2)) + d;
             if (IsEmpty(g, x, y, w, h)) continue;
-            if (!IsEmpty(g, x+1, y+1, w-2, h-2)) continue;
-            
+            if (!IsEmpty(g, x + 1, y + 1, w - 2, h - 2)) continue;
+
             string[][] r = GetRegion(g, x, y, w, h);
             SetRegion(p, g, x, y, false);
             var revert = false;
-            for (j = y - 2; !revert&&j <= y + h; j++)
-            for (i = x - 2; !revert&&i <= x + w; i++)
-            {
-                if(GetCell(g,i,j)=="_"&&
-                GetCell(g,i+1,j)=="_"&&
-                GetCell(g,i+1,j+1)=="_"&&
-                GetCell(g, i, j + 1) == "_") revert = true;
-                if(GetCell(g,i,j)!="_"&&
-                GetCell(g,i+1,j)=="_"&&
-                GetCell(g,i+1,j+1)!="_"&&
-                GetCell(g, i, j + 1) == "_") revert = true;
-                if(GetCell(g,i,j)=="_"&&
-                GetCell(g,i+1,j)!="_"&&
-                GetCell(g,i+1,j+1)=="_"&&
-                GetCell(g, i, j + 1) != "_") revert = true;
+            for (j = y - 2; !revert && j <= y + h; j++)
+                for (i = x - 2; !revert && i <= x + w; i++)
+                {
+                    if (GetCell(g, i, j) == "_" &&
+                    GetCell(g, i + 1, j) == "_" &&
+                    GetCell(g, i + 1, j + 1) == "_" &&
+                    GetCell(g, i, j + 1) == "_") revert = true;
+                    if (GetCell(g, i, j) != "_" &&
+                    GetCell(g, i + 1, j) == "_" &&
+                    GetCell(g, i + 1, j + 1) != "_" &&
+                    GetCell(g, i, j + 1) == "_") revert = true;
+                    if (GetCell(g, i, j) == "_" &&
+                    GetCell(g, i + 1, j) != "_" &&
+                    GetCell(g, i + 1, j + 1) == "_" &&
+                    GetCell(g, i, j + 1) != "_") revert = true;
 
-                if (
-                GetCell(g,i,j)=="_"&&
-                GetCell(g,i+1,j)==" "&&
-                GetCell(g,i+2,j)=="_") revert = true;
-                if (
-                GetCell(g,i,j)=="_"&&
-                GetCell(g,i,j+1)==" "&&
-                GetCell(g,i,j+2)=="_") revert = true;
-            }
+                    if (
+                    GetCell(g, i, j) == "_" &&
+                    GetCell(g, i + 1, j) == " " &&
+                    GetCell(g, i + 2, j) == "_") revert = true;
+                    if (
+                    GetCell(g, i, j) == "_" &&
+                    GetCell(g, i, j + 1) == " " &&
+                    GetCell(g, i, j + 2) == "_") revert = true;
+                }
             if (revert) SetRegion(r, g, x, y, true);
             else changesLeft--;
         }
         return g;
     }
 
-    void SetRegion(string[][] pattern,string[][] g, int x, int y,bool replace)
+    void SetRegion(string[][] pattern, string[][] g, int x, int y, bool replace)
     {
-        for (var j = 0; j < pattern.Length; j++) 
-        for (var i = 0; i < pattern[j].Length; i++) 
-        {
-            if (!replace&&GetCell(g, x+i, y+j) != " ") continue;
-            SetCell(g, x + i, y + j, GetCell(pattern, i, j));
-        }
+        for (var j = 0; j < pattern.Length; j++)
+            for (var i = 0; i < pattern[j].Length; i++)
+            {
+                if (!replace && GetCell(g, x + i, y + j) != " ") continue;
+                SetCell(g, x + i, y + j, GetCell(pattern, i, j));
+            }
     }
     string GetCell(string[][] pattern, int i, int j)
     {
-	    if (j<0||j>=pattern.Length) return null;
-	    if (i<0||i>=pattern[j].Length) return null;
+        if (j < 0 || j >= pattern.Length) return null;
+        if (i < 0 || i >= pattern[j].Length) return null;
         return pattern[j][i];
     }
     void SetCell(string[][] pattern, int i, int j, string s)
     {
-        pattern[j][i]=s;
+        pattern[j][i] = s;
     }
     bool IsEmpty(string[][] g, int x, int y, int w, int h)
     {
-        for (int j = 0; j < h; j++) 
-        for (int i = 0; i < w; i++) 
-        {
-            string s = GetCell(g, x + i, y + j);
-            if (s!=null && s != " ") return false;
-        }
+        for (int j = 0; j < h; j++)
+            for (int i = 0; i < w; i++)
+            {
+                string s = GetCell(g, x + i, y + j);
+                if (s != null && s != " ") return false;
+            }
         return true;
     }
     string[][] GetRegion(string[][] g, int x, int y, int w, int h)
     {
         string[][] p = new string[h][];
 
-        for (int j = 0; j < h; j++) 
-        for (int i = 0; i < w; i++) 
-        {
-            if (i==0) p[j] = new string[w];
-            string s = GetCell(g, x + i, y + j);
-            if (s==null) s = " ";
-            SetCell(p, i, j, s);
-        }
+        for (int j = 0; j < h; j++)
+            for (int i = 0; i < w; i++)
+            {
+                if (i == 0) p[j] = new string[w];
+                string s = GetCell(g, x + i, y + j);
+                if (s == null) s = " ";
+                SetCell(p, i, j, s);
+            }
         return p;
     }
 
@@ -248,48 +311,48 @@ public class CityGenerator : MonoBehaviour
     // "a" is Building Cell
     // " " is Terrain Cell
 
-    string[][][] GetSquareData()    
+    string[][][] GetSquareData()
     {
         return new[]
         {
-			new[]
-            {
-				new[]{"_","_","_","_","_","_","_","_","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","_","_","_","_","_","_","_","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","_","_","_","_","_","_","_","_"}
-			},
             new[]
             {
-				new[]{"_","_","_","_","_","_","_"},
-				new[]{"_","a","a","_","a","a","_"},
-				new[]{"_","a","a","_","a","a","_"},
-				new[]{"_","_","_","_","_","_","_"}
-			},
+                new[]{"_","_","_","_","_","_","_","_","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","_","_","_","_","_","_","_","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","_","_","_","_","_","_","_","_"}
+            },
             new[]
             {
-				new[]{"_","_","_","_"},
-				new[]{"_","a","a","_"},
-				new[]{"_","_","_","_"}
-			},
+                new[]{"_","_","_","_","_","_","_"},
+                new[]{"_","a","a","_","a","a","_"},
+                new[]{"_","a","a","_","a","a","_"},
+                new[]{"_","_","_","_","_","_","_"}
+            },
             new[]
             {
-				new[]{"_","_","_","_"},
-				new[]{"_","a","a","_"},
-				new[]{"_","a","a","_"},
-				new[]{"_","a","a","_"},
-				new[]{"_","_","_","_"}
-			},
+                new[]{"_","_","_","_"},
+                new[]{"_","a","a","_"},
+                new[]{"_","_","_","_"}
+            },
             new[]
             {
-				new[]{"_","_","_","_","_","_","_","_","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","a","a","a","_","a","a","a","_"},
-				new[]{"_","_","_","_","_","_","_","_","_"}
-			}
-        };        
-    }    
+                new[]{"_","_","_","_"},
+                new[]{"_","a","a","_"},
+                new[]{"_","a","a","_"},
+                new[]{"_","a","a","_"},
+                new[]{"_","_","_","_"}
+            },
+            new[]
+            {
+                new[]{"_","_","_","_","_","_","_","_","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","a","a","a","_","a","a","a","_"},
+                new[]{"_","_","_","_","_","_","_","_","_"}
+            }
+        };
+    }
 }
