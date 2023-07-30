@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public NavMeshSurface[] navMeshSurfaces;
     bool isBaked;
 
+    public Transform playerSpwanPt;
+    public GameObject player;
     public bool activateLight;
 
     //public List<Transform> accessibleHouses = new List<Transform>();
@@ -34,7 +36,9 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (cityGenerator && cityGenerator.transform.childCount == 0)
+        npcFactory.range = 20;
+
+        if (cityGenerator)
         {
             ClearhWaypoint();
             cityGenerator.GenerateCity();
@@ -54,6 +58,8 @@ public class GameManager : MonoBehaviour
             {
                 ClearhWaypoint();
                 cityGenerator.GenerateCity();
+
+                player.transform.position = playerSpwanPt.position;
 
             }
                 
@@ -96,8 +102,8 @@ public class GameManager : MonoBehaviour
     void RegenerateNPC()
     {
         //refresh nav mesh bounds
-        npcFactory.navMeshBounds = npcFactory.CalculateBoundsOfNavMesh();
-        npcFactory.RefreshRanges();
+        //npcFactory.navMeshBounds = npcFactory.CalculateBoundsOfNavMesh();
+        //npcFactory.RefreshRanges();
 
         //clear npc
         for (int i = 0; i < npcFactory.npcParent.childCount; i++)

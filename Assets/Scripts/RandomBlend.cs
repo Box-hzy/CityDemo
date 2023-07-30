@@ -4,33 +4,55 @@ using UnityEngine;
 
 public class RandomBlend : StateMachineBehaviour
 {
+    [SerializeField]
+    private float _timeUntilBored;
+
+    [SerializeField]
+    private int _numberOfBoredAnimations;
+
+    private bool _isBored;
+    private float _idleTime;
+    private int _boredAnimation;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetFloat("IdleBlend",Random.Range(0, 3));
+        ResetIdle();
+        Debug.Log("enter idle");
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if (_isBored == false)
+        {
+            _idleTime += Time.deltaTime;
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
+            if (_idleTime > _timeUntilBored && stateInfo.normalizedTime % 1 < 0.02f)
+            {
+                _isBored = true;
+                _boredAnimation = Random.Range(1, _numberOfBoredAnimations + 1);
+                _boredAnimation = _boredAnimation * 2 - 1;
 
-    // OnStateMove is called right after Animator.OnAnimatorMove()
-    //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that processes and affects root motion
-    //}
+                animator.SetFloat("IdleBlend", _boredAnimation - 1);
+            }
+        }
+        else if (stateInfo.normalizedTime % 1 > 0.98)
+        {
+            ResetIdle();
+        }
 
-    // OnStateIK is called right after Animator.OnAnimatorIK()
-    //override public void OnStateIK(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    // Implement code that sets up animation IK (inverse kinematics)
-    //}
+        animator.SetFloat("IdleBlend", _boredAnimation, 0.2f, Time.deltaTime);
+    }
+
+    private void ResetIdle()
+    {
+        if (_isBored)
+        {
+            _boredAnimation--;
+        }
+
+        _isBored = false;
+        _idleTime = 0;
+    }
 }
