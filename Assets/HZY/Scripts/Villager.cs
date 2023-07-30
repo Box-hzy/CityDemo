@@ -12,13 +12,12 @@ public class Villager : VillagerBase
     {
         Idle,
         Walk,
-        Escape,
-        Onlook,
-        Investigate
+        //Escape,
+        //Onlook,
+        //Investigate
     }
 
     NavMeshAgent agent;
-    HouseManager houseManager;
     Animator animator;
 
     //basic property
@@ -26,10 +25,7 @@ public class Villager : VillagerBase
     public float runSpeed = 6f;
     public float detectRadius = 20;
     public float maxWalkDistance = 200;
-    public float onLookRange = 10;
-    public Vector2 runawayRange = new Vector2(70, 100);
-    public bool hasBeenInvestigated;
-    //private bool isBeingInvestigate;
+   
 
     //for check if the villager is stuck by the nav mesh
     [SerializeField] private Vector3 previousLocation;
@@ -57,7 +53,7 @@ public class Villager : VillagerBase
         //ChangeSkin();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        houseManager = GameObject.FindObjectOfType<HouseManager>();
+        //houseManager = GameObject.FindObjectOfType<HouseManager>();
         //detectedCollider = new Collider[30];
         Init();
         ChangeStateAndEnter(currentState);
@@ -111,17 +107,17 @@ public class Villager : VillagerBase
         CurrentStateOnStay();
 
         //check house state
-        if (firedHouse != null)
-        {
-            //if (firedHouse.GetComponent<House>().getState() != 1 && firedHouse.GetComponent<House>().getState() != 2)
-            if (firedHouse.GetComponent<House>().getState() == 0)
-            {
-                firedHouse = null;
-                //Debug.Log("house is not on fire");
-                return;
-            }
-            distanceFromFiredHouse = Vector3.Distance(transform.position, firedHouse.transform.position);
-        }
+        //if (firedHouse != null)
+        //{
+        //    //if (firedHouse.GetComponent<House>().getState() != 1 && firedHouse.GetComponent<House>().getState() != 2)
+        //    if (firedHouse.GetComponent<House>().getState() == 0)
+        //    {
+        //        firedHouse = null;
+        //        //Debug.Log("house is not on fire");
+        //        return;
+        //    }
+        //    distanceFromFiredHouse = Vector3.Distance(transform.position, firedHouse.transform.position);
+        //}
 
         //check if the villager is being investigated by the police
         //if (isBeingInvestigate)
@@ -139,18 +135,18 @@ public class Villager : VillagerBase
         switch (currentState)
         {
             case State.Idle:
-                DetectFiredHouse();
+                //DetectFiredHouse();
                 break;
             case State.Walk:
-                DetectFiredHouse();
+                //DetectFiredHouse();
                 CheckIfArrive();
                 break;
-            case State.Escape:
-                break;
-            case State.Onlook:
-                break;
-            case State.Investigate:
-                break;
+            //case State.Escape:
+            //    break;
+            //case State.Onlook:
+            //    break;
+            //case State.Investigate:
+            //    break;
             default:
                 break;
         }
@@ -165,15 +161,15 @@ public class Villager : VillagerBase
                 break;
             case State.Walk:
                 break;
-            case State.Escape:
-                DetectFiredHouseDistance();
-                break;
-            case State.Onlook:
-                CheckFiredHouseState();
-                CheckFiredHouseDistance();
-                break;
-            case State.Investigate:
-                break;
+            //case State.Escape:
+            //    DetectFiredHouseDistance();
+            //    break;
+            //case State.Onlook:
+            //    CheckFiredHouseState();
+            //    CheckFiredHouseDistance();
+            //    break;
+            //case State.Investigate:
+            //    break;
             default:
                 break;
 
@@ -197,25 +193,25 @@ public class Villager : VillagerBase
                 //Debug.Log("Villager Walking");
                 animator.SetBool("Walk", true);
                 agent.speed = walkSpeed;
-                SetRandomDestination();
+                //SetRandomDestination();
                 StartCoroutine(CheckIfStuck());
                 break;
-            case State.Escape:
-                //Debug.Log("Villager Escape");
-                animator.SetBool("Run", true);
-                agent.speed = runSpeed;
-                StartCoroutine(SetEscapePointAndEscape());
-                break;
-            case State.Onlook:
-                animator.SetBool("Walk", true);
-                agent.speed = walkSpeed;
-                SetOnLookPoint();
-                break;
-            case State.Investigate:
-                //Debug.Log("Villager Investigate");
-                agent.isStopped = true;
-                animator.SetBool("Talk", true);
-                break;
+            //case State.Escape:
+            //    //Debug.Log("Villager Escape");
+            //    animator.SetBool("Run", true);
+            //    agent.speed = runSpeed;
+            //    StartCoroutine(SetEscapePointAndEscape());
+            //    break;
+            //case State.Onlook:
+            //    animator.SetBool("Walk", true);
+            //    agent.speed = walkSpeed;
+            //    SetOnLookPoint();
+            //    break;
+            //case State.Investigate:
+            //    //Debug.Log("Villager Investigate");
+            //    agent.isStopped = true;
+            //    animator.SetBool("Talk", true);
+            //    break;
             default:
                 break;
         }
@@ -237,24 +233,24 @@ public class Villager : VillagerBase
                 animator.SetBool("Walk", false);
                 StopAllCoroutines();
                 break;
-            case State.Escape:
-                animator.SetBool("Run", false);
-                animator.SetBool("Walk", false);
-                //StopCoroutine(SetEscapePointAndEscape());
-                StopAllCoroutines();
-                Debug.Log("STOP");
-                break;
-            case State.Onlook:
-                agent.isStopped = false;
-                //animator.SetBool("Onlook", false);
-                //StopCoroutine(RandomOnlookAnimation());
-                StopAllCoroutines();
-                break;
-            case State.Investigate:
-                animator.SetBool("Talk", false);
-                hasBeenInvestigated = false;
-                agent.isStopped = false;
-                break;
+            //case State.Escape:
+            //    animator.SetBool("Run", false);
+            //    animator.SetBool("Walk", false);
+            //    //StopCoroutine(SetEscapePointAndEscape());
+            //    StopAllCoroutines();
+            //    Debug.Log("STOP");
+            //    break;
+            //case State.Onlook:
+            //    agent.isStopped = false;
+            //    //animator.SetBool("Onlook", false);
+            //    //StopCoroutine(RandomOnlookAnimation());
+            //    StopAllCoroutines();
+            //    break;
+            //case State.Investigate:
+            //    animator.SetBool("Talk", false);
+            //    hasBeenInvestigated = false;
+            //    agent.isStopped = false;
+            //    break;
             default:
                 break;
         }
@@ -286,25 +282,25 @@ public class Villager : VillagerBase
     }
 
     //OnEnter
-    void SetRandomDestination()
-    {
-        //set random bool, the villager either has target or roam around
-        int randomNumber = Random.Range(0, 2);
-        hasTargetHouse = randomNumber == 0;
-        if (hasTargetHouse)
-        {
+    //void SetRandomDestination()
+    //{
+    //    //set random bool, the villager either has target or roam around
+    //    int randomNumber = Random.Range(0, 2);
+    //    hasTargetHouse = randomNumber == 0;
+    //    if (hasTargetHouse)
+    //    {
            
-            int random = Random.Range(0, houseManager.accessibleHouses.Count);
-            //targetHouse = houseManager.houses[randomNumber].transform;
-            targetHouse = houseManager.accessibleHouses[random].transform;
-            targetDestination = targetHouse.GetChild(0).position;
-        }
-        else
-        {
-            targetDestination = RandomPoint(transform.position, maxWalkDistance, 10);
-        }
-        agent.SetDestination(targetDestination);
-    }
+    //        int random = Random.Range(0, houseManager.accessibleHouses.Count);
+    //        //targetHouse = houseManager.houses[randomNumber].transform;
+    //        targetHouse = houseManager.accessibleHouses[random].transform;
+    //        targetDestination = targetHouse.GetChild(0).position;
+    //    }
+    //    else
+    //    {
+    //        targetDestination = RandomPoint(transform.position, maxWalkDistance, 10);
+    //    }
+    //    agent.SetDestination(targetDestination);
+    //}
 
     //private Vector3 RandomNavmeshLocation(Vector3 origin, float distance)
     //{
@@ -344,54 +340,54 @@ public class Villager : VillagerBase
     public Collider[] detectedCollider;
 
     //OnStay
-    void DetectFiredHouse()
-    {
-        detectedCollider = new Collider[30];
-        Physics.OverlapSphereNonAlloc(transform.position, detectRadius, detectedCollider, detectableLayer);
-        for (int i = 0; i < detectedCollider.Length; i++)
-        {
-            if (detectedCollider[i] == null) return;
-            //if the house is on fire, start escape mode
-            if (detectedCollider[i].TryGetComponent<House>(out House house))
-            {
-                if (house.getState() == 1)
-                {
-                    //Debug.Log("house state = 1!");
-                    firedHouse = house;
+    //void DetectFiredHouse()
+    //{
+    //    detectedCollider = new Collider[30];
+    //    Physics.OverlapSphereNonAlloc(transform.position, detectRadius, detectedCollider, detectableLayer);
+    //    for (int i = 0; i < detectedCollider.Length; i++)
+    //    {
+    //        if (detectedCollider[i] == null) return;
+    //        //if the house is on fire, start escape mode
+    //        if (detectedCollider[i].TryGetComponent<House>(out House house))
+    //        {
+    //            if (house.getState() == 1)
+    //            {
+    //                //Debug.Log("house state = 1!");
+    //                firedHouse = house;
 
-                    //Debug.Log("111: " + firedHouse.name);
-                    ChangeStateAndEnter(State.Escape);
-                    break;
-                }
-                //if the house is being puting out on fire, villager will stay around;
-                else if (house.getState() == 2)
-                {
-                    firedHouse = house;
-                    //Debug.Log("222: "+firedHouse.name);
-                    ChangeStateAndEnter(State.Onlook);
-                    break;
-                }
+    //                //Debug.Log("111: " + firedHouse.name);
+    //                ChangeStateAndEnter(State.Escape);
+    //                break;
+    //            }
+    //            //if the house is being puting out on fire, villager will stay around;
+    //            else if (house.getState() == 2)
+    //            {
+    //                firedHouse = house;
+    //                //Debug.Log("222: "+firedHouse.name);
+    //                ChangeStateAndEnter(State.Onlook);
+    //                break;
+    //            }
 
-            }
-
-
-            //chain reaction, the escape villager also effect the other villager
-            if (detectedCollider[i].TryGetComponent<Villager>(out Villager villager))
-            {
-                if (detectedCollider[i].gameObject == gameObject) return;
-
-                if (villager.currentState == State.Escape && villager.distanceFromFiredHouse < 10)
-                {
-                    firedHouse = villager.firedHouse;
-                    // Debug.Log("from villager: " + firedHouse.name);
-                    ChangeStateAndEnter(State.Escape);
-                }
-            }
+    //        }
 
 
+    //        //chain reaction, the escape villager also effect the other villager
+    //        if (detectedCollider[i].TryGetComponent<Villager>(out Villager villager))
+    //        {
+    //            if (detectedCollider[i].gameObject == gameObject) return;
 
-        }
-    }
+    //            if (villager.currentState == State.Escape && villager.distanceFromFiredHouse < 10)
+    //            {
+    //                firedHouse = villager.firedHouse;
+    //                // Debug.Log("from villager: " + firedHouse.name);
+    //                ChangeStateAndEnter(State.Escape);
+    //            }
+    //        }
+
+
+
+    //    }
+    //}
 
     //OnStay
     void CheckIfArrive()
@@ -427,77 +423,7 @@ public class Villager : VillagerBase
 
 
     #endregion
-    #region Escape
-    //OnEnter
-    IEnumerator SetEscapePointAndEscape()
-    {
-        //if(currentState != State.Escape) yield break;
-        //Debug.Log("Enter escape coroutine");
-        while (CheckIfReachDestination(firedHouse.transform.position, 80))
-        {
-
-            if (currentState != State.Escape)
-            {
-                //Debug.Log("COROUTINE BREAK");
-                yield break;
-            }
-            //Vector3 direction = (firedHouse.transform.position - transform.position).normalized;
-            float randomRange = Random.Range(runawayRange.x, runawayRange.y);
-            //Vector3 randomDirection = Random.insideUnitSphere*randomRange;
-            //randomDirection.z = 0;
-            //NavMeshHit hit;
-            //NavMesh.SamplePosition(randomDirection + transform.position, out hit, 70, NavMesh.AllAreas);
-            //Vector3 randomRun = RandomNavmeshLocation(transform.position, randomRange);
-
-            Vector3 destination = RandomPoint(transform.position, randomRange, randomRange);
-            agent.SetDestination(destination);
-            //Debug.Log("Set escape destination");
-            yield return new WaitForSeconds(5);
-        }
-
-    }
-
-    //OnStay
-    void DetectFiredHouseDistance()
-    {
-        if (firedHouse == null)
-        {
-            ChangeStateAndEnter(State.Walk);
-        }
-        else
-        {
-            if (firedHouse.getState() == 1)
-            {
-                if (agent.remainingDistance < 1)
-                {
-                    ChangeStateAndEnter(State.Escape);
-                }
-            }
-            else if (firedHouse.getState() == 2)
-            {
-                ChangeStateAndEnter(State.Onlook);
-            }
-        }
-
-        //if the house is being putting out on fire, then change to onlook state
-        //else if (CheckIfReachDestination(firedHouse.transform.position, 80) && firedHouse.getState() == 2)
-        //{
-        //    ChangeStateAndEnter(State.Onlook);
-        //}
-
-        ////else if (CheckIfReachDestination(firedHouse.transform.position, 80) && firedHouse.getState() == 1)
-        ////{
-        ////    ChangeStateAndEnter(State.Escape);
-        ////}
-        ////if run too far (>80), then change back to walk state 
-        //else if (!CheckIfReachDestination(firedHouse.transform.position, 80))
-        //{
-        //    firedHouse = null;
-        //}
-
-    }
-
-    #endregion
+    
     #region Idle
     //OnEnter
     void IdleOnEnter()
@@ -544,20 +470,20 @@ public class Villager : VillagerBase
     #endregion
     #region OnLook
     //onEnter
-    void SetOnLookPoint()
-    {
-        if (firedHouse == null) return;
-        //Vector3 randomDirection = Random.insideUnitSphere*onLookRange;
-        //randomDirection.z = 0;
-        //NavMeshHit hit;
-        //NavMesh.SamplePosition(randomDirection + firedHouse.transform.position, out hit, 20, NavMesh.AllAreas);
-        //Vector3 destination = (transform.position - firedHouse.transform.position).normalized * onLookRange;
-        Vector3 onLookPosition = firedHouse.transform.position + (transform.position - firedHouse.transform.position).normalized * onLookRange;
-        NavMeshHit hit;
-        NavMesh.SamplePosition(onLookPosition, out hit, onLookRange, NavMesh.AllAreas);
-        agent.SetDestination(hit.position);
-        Debug.Log("set destination");
-    }
+    //void SetOnLookPoint()
+    //{
+    //    if (firedHouse == null) return;
+    //    //Vector3 randomDirection = Random.insideUnitSphere*onLookRange;
+    //    //randomDirection.z = 0;
+    //    //NavMeshHit hit;
+    //    //NavMesh.SamplePosition(randomDirection + firedHouse.transform.position, out hit, 20, NavMesh.AllAreas);
+    //    //Vector3 destination = (transform.position - firedHouse.transform.position).normalized * onLookRange;
+    //    Vector3 onLookPosition = firedHouse.transform.position + (transform.position - firedHouse.transform.position).normalized * onLookRange;
+    //    NavMeshHit hit;
+    //    NavMesh.SamplePosition(onLookPosition, out hit, onLookRange, NavMesh.AllAreas);
+    //    agent.SetDestination(hit.position);
+    //    Debug.Log("set destination");
+    //}
 
     //OnStay
     /// <summary>
@@ -584,63 +510,63 @@ public class Villager : VillagerBase
     /// <summary>
     /// check if it arrive onlook position, then stop moving
     /// </summary>
-    void CheckFiredHouseDistance()
-    {
-        if (agent.isStopped) return;
-        if (agent.remainingDistance < 1)
-        {
-            Debug.Log("less than 1");
-            agent.isStopped = true;
-            animator.SetBool("Walk", false);
+    //void CheckFiredHouseDistance()
+    //{
+    //    if (agent.isStopped) return;
+    //    if (agent.remainingDistance < 1)
+    //    {
+    //        Debug.Log("less than 1");
+    //        agent.isStopped = true;
+    //        animator.SetBool("Walk", false);
 
-            if (firedHouse != null)
-            {
-                StartCoroutine(RandomOnlookAnimation());
-            }
+    //        if (firedHouse != null)
+    //        {
+    //            StartCoroutine(RandomOnlookAnimation());
+    //        }
 
 
-        }
-    }
+    //    }
+    //}
 
     //pick animation from blend tree
-    IEnumerator RandomOnlookAnimation()
-    {
-        int randomIndex = Random.Range(0, 3);
-        transform.LookAt(firedHouse.transform.position);
-        while (true)
-        {
-            if (currentState != State.Onlook) yield break;
-            animator.SetTrigger("Onlook");
-            randomIndex++;
-            if (randomIndex >= 4)
-            {
-                randomIndex = 1;
-            }
-            Debug.Log("Start random animation " + randomIndex);
-            //animator.SetBool("Onlook",true);
-            animator.SetFloat("OnlookBlendAnimations", randomIndex);
-            yield return new WaitForSeconds(6);
-        }
-    }
+    //IEnumerator RandomOnlookAnimation()
+    //{
+    //    int randomIndex = Random.Range(0, 3);
+    //    transform.LookAt(firedHouse.transform.position);
+    //    while (true)
+    //    {
+    //        if (currentState != State.Onlook) yield break;
+    //        animator.SetTrigger("Onlook");
+    //        randomIndex++;
+    //        if (randomIndex >= 4)
+    //        {
+    //            randomIndex = 1;
+    //        }
+    //        Debug.Log("Start random animation " + randomIndex);
+    //        //animator.SetBool("Onlook",true);
+    //        animator.SetFloat("OnlookBlendAnimations", randomIndex);
+    //        yield return new WaitForSeconds(6);
+    //    }
+    //}
 
     #endregion
     #region Investigate
     //police will investigate the villager around the fired house, the police will call this function
-    public void BeingInvestigated(PolicemanInvInCar police, float investigateTime)
-    {
-        if (hasBeenInvestigated) return;
-        hasBeenInvestigated = true;
-        ChangeStateAndEnter(State.Investigate);
-        transform.LookAt(police.transform);
-        Invoke("FinishInvestigation", investigateTime);
-    }
+    //public void BeingInvestigated(PolicemanInvInCar police, float investigateTime)
+    //{
+    //    if (hasBeenInvestigated) return;
+    //    hasBeenInvestigated = true;
+    //    ChangeStateAndEnter(State.Investigate);
+    //    transform.LookAt(police.transform);
+    //    Invoke("FinishInvestigation", investigateTime);
+    //}
 
-    void FinishInvestigation(PolicemanInvInCar police)
-    {
-        //isBeingInvestigate = false;
-        ChangeStateAndEnter(previousState);
-        police.setState(PolicemanInvInCar.State.FindVillager);
-    }
+    //void FinishInvestigation(PolicemanInvInCar police)
+    //{
+    //    //isBeingInvestigate = false;
+    //    ChangeStateAndEnter(previousState);
+    //    police.setState(PolicemanInvInCar.State.FindVillager);
+    //}
 
     #endregion
 

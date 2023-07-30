@@ -9,10 +9,10 @@ public class VillagerManager : MonoBehaviour
     public static VillagerManager Instance;
 
     public GameObject prefab;
-    public Transform normalVillagerParent;
-    public Transform scaredVillagerParent;
+    //public Transform normalVillagerParent;
+    //public Transform scaredVillagerParent;
     public Transform villagerGroup;
-    public int numVillager = 15;
+    public int numVillager = 30;
     BoxCollider spawnArea;
 
 

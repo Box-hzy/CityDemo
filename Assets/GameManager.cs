@@ -5,11 +5,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
+
+
+
     public CityGenerator cityGenerator;
     public NavMeshSurface[] navMeshSurfaces;
+    bool isBaked;
+
+    public List<Transform> accessibleHouses = new List<Transform>();
 
 
     public KeyCode generateButton = KeyCode.N;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +42,7 @@ public class GameManager : MonoBehaviour
             if (cityGenerator)
                 cityGenerator.GenerateCity();
 
-            RefreshNavMeshSurface();
+            //RefreshNavMeshSurface();
 
         }
 
@@ -45,6 +57,16 @@ public class GameManager : MonoBehaviour
                 navMeshSurfaces[i].BuildNavMesh();
             } 
         }
+
+        isBaked = true;
+
+    }
+
+    private void LateUpdate()
+    {
+        RefreshNavMeshSurface();
         
     }
+
+
 }

@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd2e487d4304e684c86f840a1ad5ec00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomProbability: 50
+  randomProbability: 60
 --- !u!1001 &1742252408625996848
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253,7 +253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1739784992176398, guid: 3793ad411fa918d4685c2c4c1494c970, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1739784992176398, guid: 3793ad411fa918d4685c2c4c1494c970, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -394,7 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8adb0609d112fa4ebea78ea36fe3f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomSize: 0
+  randomSize: 1
 --- !u!65 &6327916165330437229
 BoxCollider:
   m_ObjectHideFlags: 0

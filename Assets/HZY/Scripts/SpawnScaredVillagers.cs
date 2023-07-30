@@ -20,41 +20,41 @@ public class SpawnScaredVillagers : MonoBehaviour
         //}
     }
 
-    private void Update()
-    {
-        CheckState();
-    }
+    //private void Update()
+    //{
+    //    CheckState();
+    //}
 
-    void CheckState()
-    {
-        switch (thisHouse.getState())
-        {
-            case 0:
-                isSpawn = false;
-                break;
-            case 1:
-                if (!isSpawn)
-                {
-                    StartCoroutine(Spawn());
-                }
-                break;
-        }
-    }
+    //void CheckState()
+    //{
+    //    switch (thisHouse.getState())
+    //    {
+    //        case 0:
+    //            isSpawn = false;
+    //            break;
+    //        case 1:
+    //            if (!isSpawn)
+    //            {
+    //                StartCoroutine(Spawn());
+    //            }
+    //            break;
+    //    }
+    //}
 
-    IEnumerator Spawn()
-    {
-        if (escapePoint == null) yield break;
-        isSpawn = true;
-        Debug.Log("spawn scared villagers");
-        for (int i = 0; i < 5; i++)
-        {
-            GameObject go = Instantiate(scaredVillager, escapePoint.position, Quaternion.identity, 
-                VillagerManager.Instance.scaredVillagerParent);
-            go.transform.forward = escapePoint.forward;
-            yield return new WaitForSeconds(0.8f);
-            //go.GetComponent<ScaredVillager>().origin = escapePoint;
-            //go.GetComponent<ScaredVillager>().SetEscapePoint();
-        }
+    //IEnumerator Spawn()
+    //{
+    //    if (escapePoint == null) yield break;
+    //    isSpawn = true;
+    //    Debug.Log("spawn scared villagers");
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        GameObject go = Instantiate(scaredVillager, escapePoint.position, Quaternion.identity, 
+    //        VillagerManager.Instance.scaredVillagerParent);
+    //        go.transform.forward = escapePoint.forward;
+    //        yield return new WaitForSeconds(0.8f);
+    //        //go.GetComponent<ScaredVillager>().origin = escapePoint;
+    //        //go.GetComponent<ScaredVillager>().SetEscapePoint();
+    //    }
 
-    }
+    //}
 }
