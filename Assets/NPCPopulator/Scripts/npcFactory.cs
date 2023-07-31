@@ -171,6 +171,7 @@ public class npcFactory : MonoBehaviour {
         Quaternion rot = Quaternion.Euler(0f, 360f * Random.value, 0f);
         if (npcParent)
             newNpc = Instantiate(npcModels[randomModel], pos, rot, npcParent);
+
         else
             newNpc = Instantiate(npcModels[randomModel], pos, rot);
 
@@ -178,6 +179,7 @@ public class npcFactory : MonoBehaviour {
         newNpc.AddComponent<npcIndividual>();
         npcIndividual indiv = newNpc.GetComponent<npcIndividual>();
         
+
         // Set animator controller.
         Animator indivAnim = indiv.GetComponent<Animator>();
         indivAnim.runtimeAnimatorController = animatorController;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,11 +14,11 @@ public class GameManager : MonoBehaviour
     //[HideInInspector]public List<Vector3> waypoints = new List<Vector3>();
     //public GameObject waypointPrefab;
     public Transform waypointGroup;
-   
+
 
     public CityGenerator cityGenerator;
     public NavMeshSurface[] navMeshSurfaces;
-    bool isBaked;
+    bool start;
 
     public Transform playerSpwanPt;
     public GameObject player;
@@ -43,8 +44,7 @@ public class GameManager : MonoBehaviour
             ClearhWaypoint();
             cityGenerator.GenerateCity();
 
-            RefreshNavMeshSurface();
-            RegenerateNPC();
+            start =true;
         }
     }
 
@@ -59,10 +59,13 @@ public class GameManager : MonoBehaviour
                 ClearhWaypoint();
                 cityGenerator.GenerateCity();
 
+                start = true;
+
                 player.transform.position = playerSpwanPt.position;
 
+
             }
-                
+
 
         }
 
@@ -92,10 +95,8 @@ public class GameManager : MonoBehaviour
             if (navMeshSurfaces[i] != null)
             {
                 navMeshSurfaces[i].BuildNavMesh();
-            } 
+            }
         }
-
-        isBaked = true;
 
     }
 
@@ -114,18 +115,29 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < numOfNPC; i++)
         {
             GameObject newNpc = npcFactory.CreateNpc();
+            newNpc.name = newNpc.name + "_" + i.ToString();
         }
+    }
+
+    void Refresh()
+    {
+        RefreshNavMeshSurface();
+        RegenerateNPC();
     }
 
     private void LateUpdate()
     {
-        
-        if (Input.GetKeyDown(generateButton))
-        {
-            RefreshNavMeshSurface();
-            RegenerateNPC();
 
+        if (start)
+        {
+            Refresh();
+            start = false;
         }
+
+        //if (Input.GetKeyDown(generateButton))
+        //{
+        //    Refresh();
+        //}
 
     }
 
